@@ -2190,6 +2190,7 @@ def ee_export_image(
     format="ZIPPED_GEO_TIFF",
     timeout=300,
     proxies=None,
+    cloud_optimized=False,
 ):
     """Exports an ee.Image as a GeoTIFF.
 
@@ -2206,6 +2207,7 @@ def ee_export_image(
             filePerBand and all band-level transformations will be ignored. Loading a NumPy output results in a structured array.
         timeout (int, optional): The timeout in seconds for the request. Defaults to 300.
         proxies (dict, optional): A dictionary of proxy servers to use. Defaults to None.
+        cloud_optimized (bool, optional): Whether to produce a cloud optimized GeoTIFF. Defaults to False.
     """
 
     if not isinstance(ee_object, ee.Image):
@@ -2224,7 +2226,7 @@ def ee_export_image(
 
     try:
         print("Generating URL ...")
-        params = {"name": name, "filePerBand": file_per_band}
+        params = {"name": name, "filePerBand": file_per_band, "formatOptions":{'cloudOptimized':cloud_optimized}}
 
         params["scale"] = scale
         if region is None:
